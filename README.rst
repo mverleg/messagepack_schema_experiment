@@ -1,5 +1,5 @@
 
-A [Rust wasm](https://rustwasm.github.io/) example with [json schema](https://json-schema.org/) and [messagepack](https://msgpack.org/index.html)
+A Rust Wasm example with Json Schema and MessagePack
 ===============================================================
 
 This project isn't finished!
