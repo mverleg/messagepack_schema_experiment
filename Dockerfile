@@ -1,17 +1,20 @@
 
-FROM alpine:3.11.2
+# This is a popular image that claims to fix a number of issues in vanilla Docker Ubuntu
+# https://phusion.github.io/baseimage-docker/
+FROM phusion/baseimage:0.11
+CMD ["/sbin/my_init"]
 
 WORKDIR /tmp
 
 # General utils
-RUN apk add --update curl && rm -rf /var/cache/apk/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git-core curl build-essential openssl libssl-dev ca-certificates gcc
 
 # Npm
-RUN apk add --update nodejs nodejs-npm && rm -rf /var/cache/apk/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs npm
 RUN npm install npm@latest -g
 
 # Rust
-RUN apk add --no-cache ca-certificates gcc && rm -rf /var/cache/apk/*
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/cargo \
     PATH=/cargo/bin:$PATH \
